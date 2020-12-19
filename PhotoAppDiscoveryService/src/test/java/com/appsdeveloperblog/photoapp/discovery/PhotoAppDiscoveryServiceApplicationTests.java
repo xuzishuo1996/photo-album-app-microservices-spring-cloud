@@ -1,10 +1,10 @@
-package com.appsdeveloperblog.photoapp.api.users.photoappapiusers;
+package com.appsdeveloperblog.photoapp.discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PhotoappapiusersApplicationTests {
+class PhotoAppDiscoveryServiceApplicationTests {
 
     @Test
     void contextLoads() {

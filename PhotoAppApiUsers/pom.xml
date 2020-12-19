@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.appsdeveloperblog.photoapp.api.users</groupId>
-    <artifactId>photoappapiusers</artifactId>
+    <artifactId>photo-app-api-users</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>photoappapiusers</name>
+    <name>photo-app-api-users</name>
     <description>Users Microservice</description>
 
     <properties>
