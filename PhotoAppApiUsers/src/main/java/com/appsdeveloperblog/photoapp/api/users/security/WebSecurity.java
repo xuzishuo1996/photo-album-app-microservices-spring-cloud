@@ -12,5 +12,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();  // CSRF: Cross Site Request Forgery
         http.authorizeRequests().antMatchers("/users/**").permitAll();
+        http.headers().frameOptions().disable();    // to connect to h2-console
     }
 }
