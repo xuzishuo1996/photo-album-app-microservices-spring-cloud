@@ -42,6 +42,10 @@ public class UsersServiceImpl implements UsersService {
         return modelMapper.map(userEntity, UserDto.class);
     }
 
+    /* for login
+     * email is treated as the username
+     * override method of UserDetailsService interface
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = usersRepository.findByEmail(username);
@@ -54,5 +58,15 @@ public class UsersServiceImpl implements UsersService {
         // the last para authorities is not used, so pass in an empty list
         return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(),
                 true, true, true, true, new ArrayList<>());
+    }
+
+    @Override
+    public UserDto getUserDetailsByEmail(String email) {
+        UserEntity userEntity = usersRepository.findByEmail(email);
+
+        if (userEntity == null) {
+            throw new UsernameNotFoundException(email);
+        }
+        return new ModelMapper().map(userEntity, UserDto.class);
     }
 }
