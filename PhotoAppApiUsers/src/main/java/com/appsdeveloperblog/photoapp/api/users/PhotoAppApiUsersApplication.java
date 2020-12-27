@@ -10,10 +10,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class PhotoAppApiUusersApplication {
+public class PhotoAppApiUsersApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PhotoAppApiUusersApplication.class, args);
+        SpringApplication.run(PhotoAppApiUsersApplication.class, args);
     }
 
     @Bean

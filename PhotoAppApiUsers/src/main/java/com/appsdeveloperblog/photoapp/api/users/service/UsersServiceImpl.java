@@ -95,8 +95,8 @@ public class UsersServiceImpl implements UsersService {
         String albumsUrl = String.format(environment.getProperty("albums.url"), userId);
 
         ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(albumsUrl,
-                HttpMethod.GET, null, new ParameterizedTypeReference<>() {
-                });
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<AlbumResponseModel>>() {
+                });     // there is a bug in JDK 11.0.7 that you have to include the type in ParameterizedTypeReference<>.
         List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
 
         userDto.setAlbums(albumsList);
