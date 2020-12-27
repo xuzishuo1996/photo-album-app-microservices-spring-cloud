@@ -1,6 +1,7 @@
 package com.appsdeveloperblog.photoapp.api.users.service;
 
 import com.appsdeveloperblog.photoapp.api.albums.ui.model.AlbumResponseModel;
+import com.appsdeveloperblog.photoapp.api.users.data.AlbumsServiceClient;
 import com.appsdeveloperblog.photoapp.api.users.data.UserEntity;
 import com.appsdeveloperblog.photoapp.api.users.data.UsersRepository;
 import com.appsdeveloperblog.photoapp.api.users.shared.UserDto;
@@ -27,15 +28,16 @@ public class UsersServiceImpl implements UsersService {
 
     UsersRepository usersRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder;    // need to appear in the application context. create a bean for it
-    RestTemplate restTemplate;
+    //RestTemplate restTemplate;
     Environment environment;
+    AlbumsServiceClient albumsServiceClient;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RestTemplate restTemplate, Environment environment) {
+    public UsersServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder, Environment environment, AlbumsServiceClient albumsServiceClient) {
         this.usersRepository = usersRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.restTemplate = restTemplate;
         this.environment = environment;
+        this.albumsServiceClient = albumsServiceClient;
     }
 
     @Override
@@ -91,13 +93,19 @@ public class UsersServiceImpl implements UsersService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-//        String albumsUrl = String.format("http://ALBUMS-WS/users/%s/albums", userId);
+        // method 1: use RestTemplate
+        /*
+        // String albumsUrl = String.format("http://ALBUMS-WS/users/%s/albums", userId);
         String albumsUrl = String.format(environment.getProperty("albums.url"), userId);
 
         ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.exchange(albumsUrl,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<AlbumResponseModel>>() {
                 });     // there is a bug in JDK 11.0.7 that you have to include the type in ParameterizedTypeReference<>.
         List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
+         */
+
+        // method 2: use Feign client
+        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
 
         userDto.setAlbums(albumsList);
 
