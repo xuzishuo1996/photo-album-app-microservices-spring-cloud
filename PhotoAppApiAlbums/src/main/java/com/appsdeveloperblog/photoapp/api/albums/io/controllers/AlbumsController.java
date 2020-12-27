@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appsdeveloperblog.photoapp.api.albums.io.controllers;
 
 import com.appsdeveloperblog.photoapp.api.albums.data.AlbumEntity;
@@ -24,10 +19,16 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/users/{id}/albums")
 public class AlbumsController {
-    
-    @Autowired
-    AlbumsService albumsService;
+
+    private final AlbumsService albumsService;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public AlbumsController(AlbumsService albumsService) {
+        this.albumsService = albumsService;
+    }
+
     @GetMapping( 
             produces = { 
                 MediaType.APPLICATION_JSON_VALUE,
