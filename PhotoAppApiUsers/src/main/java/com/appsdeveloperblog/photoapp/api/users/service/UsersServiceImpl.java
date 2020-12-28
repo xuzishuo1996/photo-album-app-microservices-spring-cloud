@@ -117,8 +117,11 @@ public class UsersServiceImpl implements UsersService {
 //            logger.error(e.getLocalizedMessage());
 //        }
 
+        // for logging Sleuth's trace ID and span ID
+        logger.info("Before calling albums Microservice");
         // Feign Client with FeignErrorDecoder
         List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        logger.info("After calling albums Microservice");
 
         userDto.setAlbums(albumsList);
 
