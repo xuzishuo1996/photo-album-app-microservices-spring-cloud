@@ -1,0 +1,9 @@
+# https://hub.docker.com/r/adoptopenjdk/openjdk11
+FROM adoptopenjdk/openjdk11:jdk-11.0.9.1_1-alpine
+# not necessary: this is spring application create work dirs for Tomcat
+VOLUME /tmp
+COPY /home/xuzishuo1996/eClass/local-config-and-encryption-microservices/keystore-asymmetric-encryption/apiEncryptionKey.jks apiEncryptionKey.jks
+# no need for jdk-11
+# COPY UnlimitedJCEPolicyJDK8/* /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
+COPY target/photo-app-api-config-server-0.0.1-SNAPSHOT.jar ConfigServer.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","ConfigServer.jar"]
